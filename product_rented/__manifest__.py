@@ -16,7 +16,7 @@
         'product',
     ],
     'data': [
-
+        ('template', 'product_rented.template_product_rented'),
     ],
     'assets': {
         'web.assets_frontend': [

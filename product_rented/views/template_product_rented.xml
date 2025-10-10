@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="template_product_rented">
+        <section class="container">
+            <h1>Hola MUNDO :)</h1>
+        </section>
+    </template>
+</odoo>
