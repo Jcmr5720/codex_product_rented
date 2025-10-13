@@ -10,6 +10,15 @@
                     <label for="rented_bolean"/>
                 </span>
             </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page name="rent_information" string="Rentar">
+                    <group>
+                        <field name="rented_price"/>
+                        <field name="rented_time_option_ids" widget="many2many_tags"/>
+                        <field name="rented_description" widget="text"/>
+                    </group>
+                </page>
+            </xpath>
         </field>
     </record>
 </odoo>
