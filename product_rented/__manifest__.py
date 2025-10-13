@@ -1,7 +1,7 @@
 {
     'name': 'product_rented',
     'summary': 'Modulo encargado de rentar productos.',
-    'version': '1.0',
+    'version': '1.2.0',
     'author': 'Juan Camilo Muñoz',
     'category': 'Tools',
     'depends': [
@@ -16,8 +16,10 @@
         'product',
     ],
     'data': [
+        'data/rented_time_option_data.xml',
         'views/product_template_views.xml',
     ],
+    'post_init_hook': 'post_init_hook',
     'assets': {
         'web.assets_frontend': [
             ('include', 'web._assets_bootstrap'),
