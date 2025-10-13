@@ -1,0 +1,32 @@
+<odoo noupdate="1">
+    <record id="rented_time_option_1m" model="product.rented.time.option">
+        <field name="name">1 mes</field>
+        <field name="code">1m</field>
+        <field name="sequence">10</field>
+    </record>
+    <record id="rented_time_option_2m" model="product.rented.time.option">
+        <field name="name">2 meses</field>
+        <field name="code">2m</field>
+        <field name="sequence">20</field>
+    </record>
+    <record id="rented_time_option_3m" model="product.rented.time.option">
+        <field name="name">3 meses</field>
+        <field name="code">3m</field>
+        <field name="sequence">30</field>
+    </record>
+    <record id="rented_time_option_6m" model="product.rented.time.option">
+        <field name="name">6 meses</field>
+        <field name="code">6m</field>
+        <field name="sequence">40</field>
+    </record>
+    <record id="rented_time_option_1y" model="product.rented.time.option">
+        <field name="name">1 año</field>
+        <field name="code">1y</field>
+        <field name="sequence">50</field>
+    </record>
+    <record id="rented_time_option_2y" model="product.rented.time.option">
+        <field name="name">2 años</field>
+        <field name="code">2y</field>
+        <field name="sequence">60</field>
+    </record>
+</odoo>
