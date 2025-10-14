@@ -14,5 +14,11 @@ class ProductTemplate(models.Model):
         string="Tiempos de renta permitidos",
         help="Duraciones disponibles para rentar este producto.",
     )
+    rented_time_price_ids = fields.One2many(
+        comodel_name="product.rented.time.price",
+        inverse_name="product_tmpl_id",
+        string="Precios de renta",
+        copy=True,
+    )
     rented_description = fields.Text(string="Descripción de renta")
     rented_profit = fields.Float(string="Ganancia de renta")
