@@ -17,6 +17,16 @@
                         <field name="rented_time_option_ids" widget="many2many_tags"/>
                         <field name="rented_description" widget="text"/>
                     </group>
+                    <group>
+                        <field name="rented_time_price_ids">
+                            <tree editable="bottom">
+                                <field name="option_id"/>
+                                <field name="base_price"/>
+                                <field name="discount_percent"/>
+                                <field name="final_price" readonly="1"/>
+                            </tree>
+                        </field>
+                    </group>
                 </page>
             </xpath>
         </field>
