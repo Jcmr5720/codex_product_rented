@@ -13,6 +13,7 @@ class RentedProductController(http.Controller):
         ])
         formatted_prices = {}
         time_price_details = {}
+        product_ui_meta = {}
         for product in rented_products:
             if product.rented_price and product.currency_id:
                 formatted_prices[product.id] = tools.format_amount(
@@ -47,9 +48,34 @@ class RentedProductController(http.Controller):
                     }
                 )
             time_price_details[product.id] = details
+
+            badge_featured = bool(getattr(product, "rented_is_featured", False))
+            badge_new = bool(
+                getattr(product, "rented_is_new", False)
+                or getattr(product, "is_new", False)
+            )
+            badge_promo = bool(
+                getattr(product, "rented_is_on_promotion", False)
+                or getattr(product, "rented_is_promo", False)
+                or getattr(product, "is_promo", False)
+                or getattr(product, "rented_is_promotional", False)
+            )
+            quote_url = (
+                getattr(product, "rented_quote_url", False)
+                or "/contactus?subject=Solicitud%20de%20cotizaci%C3%B3n&product_id=%s"
+                % product.id
+            )
+
+            product_ui_meta[product.id] = {
+                "badge_featured": badge_featured,
+                "badge_new": badge_new,
+                "badge_promo": badge_promo,
+                "quote_url": quote_url,
+            }
         values = {
             'products': rented_products,
             'formatted_rented_prices': formatted_prices,
             'time_price_details': time_price_details,
+            'product_ui_meta': product_ui_meta,
         }
         return request.render('product_rented.template_product_rented', values)

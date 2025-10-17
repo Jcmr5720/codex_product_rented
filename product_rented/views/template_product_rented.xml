@@ -18,6 +18,7 @@
                     <t t-if="products">
                         <div class="row g-4 g-xl-5">
                             <t t-foreach="products" t-as="product">
+                                <t t-set="product_meta" t-value="product_ui_meta.get(product.id, {})"/>
                                 <div class="col-12 col-sm-6 col-lg-4">
                                     <div class="o-rented-card h-100 d-flex flex-column">
                                         <div class="o-rented-card__image">
@@ -30,9 +31,9 @@
                                                 decoding="async"
                                             />
                                             <span class="o-rented-card__image-gradient" aria-hidden="true"/>
-                                            <t t-set="badge_featured" t-value="getattr(product, 'rented_is_featured', False)"/>
-                                            <t t-set="badge_new" t-value="getattr(product, 'rented_is_new', False) or getattr(product, 'is_new', False)"/>
-                                            <t t-set="badge_promo" t-value="getattr(product, 'rented_is_on_promotion', False) or getattr(product, 'rented_is_promo', False) or getattr(product, 'is_promo', False) or getattr(product, 'rented_is_promotional', False)"/>
+                                            <t t-set="badge_featured" t-value="product_meta.get('badge_featured')"/>
+                                            <t t-set="badge_new" t-value="product_meta.get('badge_new')"/>
+                                            <t t-set="badge_promo" t-value="product_meta.get('badge_promo')"/>
                                             <t t-if="badge_featured or badge_new or badge_promo">
                                                 <div class="o-rented-card__badges">
                                                     <t t-if="badge_featured">
@@ -63,7 +64,7 @@
                                                 </t>
                                                 <t t-else="">
                                                     <div class="text-muted small mb-2">Precio de renta disponible al cotizar</div>
-                                                    <t t-set="quote_url" t-value="getattr(product, 'rented_quote_url', False) or '/contactus?subject=Solicitud%20de%20cotizaci%C3%B3n&amp;product_id=%s' % product.id"/>
+                                                    <t t-set="quote_url" t-value="product_meta.get('quote_url')"/>
                                                     <a t-att-href="quote_url" class="btn btn-outline-primary btn-sm w-100 o-rented-card__quote" role="button">
                                                         Solicitar cotización
                                                     </a>
