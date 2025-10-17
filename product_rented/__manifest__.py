@@ -27,6 +27,9 @@
             ('include', 'web._assets_bootstrap'),
             'product_rented/static/src/scss/rented_product.scss',
         ],
+        'website.assets_frontend': [
+            'product_rented/static/src/scss/rented_product.scss',
+        ],
     },
     'installable': True,
     'application': True,
