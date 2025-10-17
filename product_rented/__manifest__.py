@@ -19,6 +19,7 @@
         'security/ir.model.access.csv',
         'data/rented_time_option_data.xml',
         'views/product_template_views.xml',
+        'views/template_product_rented.xml',
     ],
     'post_init_hook': 'post_init_hook',
     'assets': {
