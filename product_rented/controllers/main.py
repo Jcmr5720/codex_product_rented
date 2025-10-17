@@ -1,14 +1,18 @@
 from odoo import http
 from odoo.http import request
-from odoo.addons.website.controllers.main import Website
 
-class rentedProduct(Website):
-        
-    @http.route('/rented_product', type='http', auth='public', website=True, sitemap=False)
-    def pages(self, **kw):
+
+class RentedProductController(http.Controller):
+    """Public controller that lists products that can be rented."""
+
+    @http.route(['/rented_product'], type='http', auth='public', website=True, sitemap=False)
+    def render_rented_products_page(self, **kwargs):
+        """Render the rented product listing for the website."""
         rented_products = request.env['product.template'].sudo().search([
             ('rented_bolean', '=', True),
             ('website_published', '=', True),
         ])
-        values = {'products': rented_products}
+        values = {
+            'products': rented_products,
+        }
         return request.render('product_rented.template_product_rented', values)
