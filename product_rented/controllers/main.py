@@ -40,6 +40,7 @@ class RentedProductController(http.Controller):
                     {
                         "id": time_price.id,
                         "option_name": option_name,
+                        "option_code": (time_price.option_id.code or "").lower(),
                         "formatted_price": formatted_rate,
                         "has_price": has_price,
                         "raw_price": final_price,
