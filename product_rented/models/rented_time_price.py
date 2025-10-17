@@ -18,6 +18,11 @@ class ProductRentedTimePrice(models.Model):
         required=True,
         ondelete="restrict",
     )
+    time_option_id = fields.Many2one(
+        related="option_id",
+        string="Opción de tiempo (legacy)",
+        readonly=True,
+    )
     base_price = fields.Float(string="Precio base", required=True)
     discount_percent = fields.Float(string="% Descuento", default=0.0)
     final_price = fields.Float(
