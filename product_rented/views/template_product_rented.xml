@@ -22,8 +22,36 @@
                                     <div class="o-rented-card h-100 d-flex flex-column">
                                         <div class="o-rented-card__image">
                                             <t t-set="product_image" t-value="website.image_url(product, 'image_1024')"/>
-                                            <img t-att-src="product_image or '/web/static/src/img/placeholder.png'" t-att-alt="product.name" class="img-fluid"/>
-                                            <span class="o-rented-card__badge">Producto destacado</span>
+                                            <img
+                                                t-att-src="product_image or '/web/static/src/img/placeholder.png'"
+                                                t-att-alt="product.name"
+                                                class="o-rented-card__image-media"
+                                                loading="lazy"
+                                                decoding="async"
+                                            />
+                                            <span class="o-rented-card__image-gradient" aria-hidden="true"/>
+                                            <t t-set="badge_featured" t-value="getattr(product, 'rented_is_featured', False)"/>
+                                            <t t-set="badge_new" t-value="getattr(product, 'rented_is_new', False) or getattr(product, 'is_new', False)"/>
+                                            <t t-set="badge_promo" t-value="getattr(product, 'rented_is_on_promotion', False) or getattr(product, 'rented_is_promo', False) or getattr(product, 'is_promo', False) or getattr(product, 'rented_is_promotional', False)"/>
+                                            <t t-if="badge_featured or badge_new or badge_promo">
+                                                <div class="o-rented-card__badges">
+                                                    <t t-if="badge_featured">
+                                                        <span class="o-rented-card__badge o-rented-card__badge--featured">
+                                                            Producto destacado
+                                                        </span>
+                                                    </t>
+                                                    <t t-if="badge_new">
+                                                        <span class="o-rented-card__badge o-rented-card__badge--new">
+                                                            Nuevo
+                                                        </span>
+                                                    </t>
+                                                    <t t-if="badge_promo">
+                                                        <span class="o-rented-card__badge o-rented-card__badge--promo">
+                                                            En promoción
+                                                        </span>
+                                                    </t>
+                                                </div>
+                                            </t>
                                         </div>
                                         <div class="o-rented-card__body d-flex flex-column">
                                             <h5 class="o-rented-card__title mb-2" t-esc="product.name"/>
@@ -34,13 +62,23 @@
                                                     <div class="o-rented-card__price">Desde <span t-esc="formatted_price"/></div>
                                                 </t>
                                                 <t t-else="">
-                                                    <div class="text-muted small">Precio de renta disponible al cotizar</div>
+                                                    <div class="text-muted small mb-2">Precio de renta disponible al cotizar</div>
+                                                    <t t-set="quote_url" t-value="getattr(product, 'rented_quote_url', False) or '/contactus?subject=Solicitud%20de%20cotizaci%C3%B3n&amp;product_id=%s' % product.id"/>
+                                                    <a t-att-href="quote_url" class="btn btn-outline-primary btn-sm w-100 o-rented-card__quote" role="button">
+                                                        Solicitar cotización
+                                                    </a>
                                                 </t>
                                             </div>
                                             <t t-if="product.rented_time_option_ids">
                                                 <div class="o-rented-card__chips mb-3">
                                                     <t t-foreach="product.rented_time_option_ids" t-as="time_option">
-                                                        <span class="o-rented-card__chip" t-esc="time_option.display_name"/>
+                                                        <t t-set="option_code" t-value="(time_option.code or '').lower()"/>
+                                                        <t t-set="chip_variant" t-value="'day' if option_code.startswith('d') else 'week' if option_code.startswith('w') else 'month' if 'm' in option_code else 'year' if 'y' in option_code else 'custom'"/>
+                                                        <t t-set="chip_icon" t-value="{'day': 'fa-sun-o', 'week': 'fa-calendar', 'month': 'fa-calendar-o', 'year': 'fa-hourglass-half'}.get(chip_variant, 'fa-clock-o')"/>
+                                                        <span t-attf-class="o-rented-card__chip o-rented-card__chip--#{chip_variant}">
+                                                            <i t-attf-class="fa #{chip_icon} me-1" role="presentation"/>
+                                                            <t t-esc="time_option.display_name"/>
+                                                        </span>
                                                     </t>
                                                 </div>
                                             </t>
@@ -50,9 +88,12 @@
                                                     <h6 class="text-uppercase text-muted fs-6 mb-2">Tarifas de renta</h6>
                                                     <ul class="list-unstyled o-rented-card__rates mb-0">
                                                         <t t-foreach="product_time_prices" t-as="time_price_info">
+                                                            <t t-set="rate_code" t-value="(time_price_info.get('option_code') or '').lower()"/>
+                                                            <t t-set="rate_variant" t-value="'day' if rate_code.startswith('d') else 'week' if rate_code.startswith('w') else 'month' if 'm' in rate_code else 'year' if 'y' in rate_code else 'custom'"/>
+                                                            <t t-set="rate_icon" t-value="{'day': 'fa-sun-o', 'week': 'fa-calendar', 'month': 'fa-calendar-o', 'year': 'fa-hourglass-half'}.get(rate_variant, 'fa-clock-o')"/>
                                                             <li class="d-flex align-items-start">
-                                                                <span class="badge rounded-pill bg-light text-primary border border-primary fw-semibold me-2">
-                                                                    <i class="fa fa-clock-o me-1" role="presentation"/>
+                                                                <span t-attf-class="badge rounded-pill fw-semibold me-2 border o-rented-card__rate-badge o-rented-card__rate-badge--#{rate_variant}">
+                                                                    <i t-attf-class="fa #{rate_icon} me-1" role="presentation"/>
                                                                     <t t-esc="time_price_info['option_name']"/>
                                                                 </span>
                                                                 <span class="text-muted">
