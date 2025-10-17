@@ -25,7 +25,7 @@
     'assets': {
         'web.assets_frontend': [
             ('include', 'web._assets_bootstrap'),
-
+            'product_rented/static/src/css/rented_product.css',
         ],
     },
     'installable': True,
